@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Dino Game</title>
+    <style>
+        body {
+            font-family: Papyrus;
+            text-align: center;
+        }
+        
+        .gameBox {
+            width: 600px;
+            height: 200px;
+            margin: auto;
+            border: 1px solid black;
+        }
+        
+        .dinoSprite {
+            width: 50px;
+            height: 50px;
+            background-image: url('https://tekie-backend.s3.amazonaws.com/webDevelopment/dino_cl7zp852z03qz0tvq085uhnat_1663043608763.png');
+            background-size: 50px 50px;
+            position: relative;
+            top: 150px;
+        }
+        
+        .jump {
+            animation: jump 0.3s linear;
+        }
+        
+        @keyframes jump {
+            0% {
+                top: 150px
+            }
+            30% {
+                top: 130px
+            }
+            50% {
+                top: 80px
+            }
+            80% {
+                top: 130px
+            }
+            100% {
+                top: 150px
+            }
+        }
+        
+        .cactus {
+            height: 40px;
+            width: 20px;
+            background-image: url("https://tekie-backend.s3.amazonaws.com/webDevelopment/cactus_cl7zp85kb03wu0vsifzck1i1r_1663043609387.png");
+            background-size: 20px 40px;
+            position: relative;
+            top: 110px;
+            left: 580px;
+        }
+        
+        .play {
+            animation: play 1s infinite linear;
+        }
+        
+        @keyframes play {
+            0% {
+                left: 580px;
+            }
+            100% {
+                left: -20px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Dino Game</h1>
+    <div class="gameBox">
+        <div class="dinoSprite" id="dinoSprite"></div>
+        <div class="cactus" id="cactus"></div>
+    </div>
+    <script>
+        var dino = document.getElementById('dinoSprite')
+
+        function jump() {
+            if (!dino.classList.contains("jump")) {
+                dino.classList.add('jump')
+                setTimeout(function() {
+                    dino.classList.remove('jump')
+                }, 300)
+            }
+        }
+        window.addEventListener("keydown", function() {
+            jump()
+            startGame()
+            setInterval(isAlive, 10)
+        })
+        var cactus = document.getElementById('cactus')
+
+
+        function startGame() {
+            cactus.classList.add('play')
+        }
+
+        function isAlive() {
+            var dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"))
+            var cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"))
+
+            if (cactusLeft >= 0 && cactusLeft <= 39 && dinoTop >= 140) {
+                alert("Game Over")
+                cactus.classList.remove('play')
+            }
+        }
+    </script>
+</body>
+
+</html>
